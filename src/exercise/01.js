@@ -5,17 +5,14 @@ import * as React from 'react'
 
 // the first argument of the use reducer function is the current state
 // the second is the action
-function countReducer(count, newCount) {
-  return newCount
+function countReducer(count, step) {
+  return count + step
 }
 
-function Counter({initialCount = 0, step = 1}) {
-  const [count, setCount] = React.useReducer(countReducer, initialCount)
+function Counter({initialCount = 0, step = 10}) {
+  const [count, changeCount] = React.useReducer(countReducer, initialCount)
 
-  const increment = () => {
-    // refereed to as the dispatch function
-    setCount(count + step)
-  }
+  const increment = () => changeCount(step)
   return <button onClick={increment}>{count}</button>
 }
 

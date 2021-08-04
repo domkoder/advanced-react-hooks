@@ -5,16 +5,19 @@ import * as React from 'react'
 
 // the first argument of the use reducer function is the current state
 // the second is the action
-function countReducer(count, actions) {
-  return {...count, ...actions}
-}
+const countReducer = (state, action) => ({
+  ...state,
+  ...(typeof action === 'function' ? action(state) : action),
+})
 
-function Counter({initialCount = 0, step = 10}) {
+function Counter({initialCount = 0, step = 1}) {
   const [state, setState] = React.useReducer(countReducer, {
     count: initialCount,
   })
   const {count} = state
-  const increment = () => setState({count: count + step})
+  const increment = () =>
+    setState(currentState => ({count: currentState.count + step}))
+
   return <button onClick={increment}>{count}</button>
 }
 
